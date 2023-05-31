@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+}
+*{
+  font-family: 'Roboto', sans-serif;
+}
+:root{
+  --primary:#00143c;
+  --primary-derv:#8ab7c4;
+  --secondary:#f9f3ed;
+  --secondary-derv:#dbf7cc;
+  --accent:#CC3D3F;
+  --accent-derv:#5e2e2f;
+  --black:#2d2d2e;
+  
+}
+/* :root{
+  --primary:#c02a2c;
+  --primary-derv:#c97878;
+  --secondary:#f7f6f5;
+  --secondary-derv:#dbf7cc;
+  --accent:#5cc436;
+  --accent-derv:#668e50;
+  --black:#2d2d2e;
+  
+} */
