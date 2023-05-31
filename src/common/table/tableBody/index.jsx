@@ -36,7 +36,7 @@ function TableBodyCom(props) {
                 textAlign: column.type === "boolean" && "center",
               }}
             >
-              {/* {console.log("id"+row._id)} */}
+              {/* {console.log("id" + row.idPerson.name)} */}
               {column.type === "boolean" ? (
                 <Switch
                   defaultChecked={row[column.access]}

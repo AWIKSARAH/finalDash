@@ -16,32 +16,31 @@ function EventsPage() {
   const [openEdit, setOpenEdit] = useState(false);
   const [editId, setEditId] = useState("");
   const [refresh, setRefresh] = useState(false);
-  const [ error,setError]= useState(false);
+  const [error, setError] = useState(false);
   const columns = [
     { label: "_id", access: "_id" },
     { label: "Title", access: "title" },
-    { label: "Category", access: "category" },
+    { label: "tel", access: "tel" },
     { label: "Description", access: "description" },
-    { label: "Location", access: "location" },
+    { label: "Country", access: "country" },
     { label: "Type", access: "type" },
-    { label: "Tel", access: "tel" },
-    { label: "Tags", access: "tags",type:"array" },
-    { label: "Image", access: "image" },
-    { label: "Start Date", access: "start_date" },
-    { label: "End Date", access: "end_date" },
-    { label: "Confirmation", access: "confirmation",type:"boolean" },
+    { label: "report", access: "report", type: "boolean" },
+    { label: "Person", access: "idPerson.name" },
+    { label: "dateLastSeen", access: "dateLastSeen" },
+    { label: "Disaster", access: "idDisaster.title" },
+    { label: "Relation", access: "relationships" },
   ];
   function cleanAndConvertToStrings(data) {
     const cleanedData = {};
     for (const key in data) {
-      if (typeof data[key] !== "undefined"||typeof data[key] !== "boolean") {
+      if (typeof data[key] !== "undefined" || typeof data[key] !== "boolean") {
         cleanedData[key] = String(data[key]);
       }
     }
     return cleanedData;
   }
-  
-  
+
+
   const handleEdit = (id) => {
     setEditId(id);
     setOpenEdit(true);
@@ -53,39 +52,41 @@ function EventsPage() {
       setRefresh(!refresh);
     }
   };
-  const authHeader=useAuthHeader()
+  const authHeader = useAuthHeader()
   useEffect(() => {
     setIsLoading(true);
     axios
-    .get(
-        `${process.env.REACT_APP_API_URL}/events/all/all?page=${currentPage}&q=${query}`,{headers:{Authorization:authHeader()}}
+      .get(
+        `${process.env.REACT_APP_API_URL}/a/?page=${currentPage}&q=${query}`, { headers: { Authorization: authHeader() } }
       )
       .then((response) => {
+        console.log(response);
         setData(response.data);
-        setOnlyStringData(response.data.data.docs);
+        setOnlyStringData(response.data.data);
         setIsLoading(false);
-      }).catch(e=>{
+      }).catch(e => {
         console.log(e)
-      setIsLoading(false);
-      setError(e.response.status===404?e.response.data.message:e.message)
+        setIsLoading(false);
+        setError(e.response.status === 404 ? e.response.data.message : e.message)
 
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ currentPage, query, refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, query, refresh]);
   const handleConfirmationChange = (value, id) => {
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/events/confirm/${id}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/a/${id}`, {
         confirmation: value,
-      },{headers:{Authorization:authHeader()}})
+      }, { headers: { Authorization: authHeader() } })
       .then((response) => {
         response.data.success && toast.success("Confirmation Updated!");
       })
       .catch((e) => toast.error("Something went wrong"));
   };
+  console.log(columns);
   return (
     <>
       <PageHeader label="Events" setSearchQuery={setQuery} />
-      
+
       <TableContent
         rows={onlyStringData}
         columns={columns}

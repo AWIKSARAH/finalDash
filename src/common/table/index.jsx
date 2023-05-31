@@ -12,15 +12,15 @@ function TableContent(props) {
   return (
     <Box sx={{ overflow: "auto" }}>
       <Box sx={{ width: "100%" }}>
- 
+
         <TableContainer
           component={Paper}
           sx={{ overflow: "auto", borderRadius: "0" }}
         >
           <Table sx={{ minWidth: "100%" }}>
-         
+
             <TableHead columns={props.columns} />
-       
+
             {!props.isLoading && !props.error ? (
               <TableBody
                 rows={props.rows}
