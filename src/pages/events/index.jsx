@@ -41,6 +41,24 @@ function EventsPage() {
   }
 
 
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/a/${id}`,
+          { headers: { Authorization: authHeader() } }
+        )
+        .then((response) => {
+          response.data.success && toast.success("Confirmation Delete!");
+          setRefresh(!refresh);
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Ooops --Something went wrong during the Delete!");
+        });
+    }
+  };
+
   const handleEdit = (id) => {
     setEditId(id);
     setOpenEdit(true);
@@ -57,7 +75,7 @@ function EventsPage() {
     setIsLoading(true);
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/a/?page=${currentPage}&q=${query}`, { headers: { Authorization: authHeader() } }
+        `${process.env.REACT_APP_API_URL}/a/all/?page=${currentPage}&q=${query}`, { headers: { Authorization: authHeader() } }
       )
       .then((response) => {
         console.log(response);
@@ -74,8 +92,8 @@ function EventsPage() {
   }, [currentPage, query, refresh]);
   const handleConfirmationChange = (value, id) => {
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/a/${id}`, {
-        confirmation: value,
+      .patch(`${process.env.REACT_APP_API_URL}/a/report/${id}`, {
+        report: value,
       }, { headers: { Authorization: authHeader() } })
       .then((response) => {
         response.data.success && toast.success("Confirmation Updated!");
@@ -95,6 +113,7 @@ function EventsPage() {
         pageCount={data?.totalPages || null}
         isLoading={isLoading}
         error={error}
+        handleDelete={handleDelete}
         handleEdit={handleEdit}
         handleConfirmationChange={handleConfirmationChange}
       />

@@ -12,7 +12,7 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function TableBodyCom(props) {
   const rows = props.rows.map((cells) => ({ ...cells }));
-
+  console.log(rows);
   return (
     <TableBody>
       {rows.map((row, key) => (
@@ -47,6 +47,7 @@ function TableBodyCom(props) {
               ) : column.type === "array" ? (
                 row[column.access].join(", ")
               ) : (
+
                 row[column.access]
               )}
             </TableCell>
@@ -77,8 +78,9 @@ function TableBodyCom(props) {
             </Button>
           </TableCell>
         </TableRow>
-      ))}
-    </TableBody>
+      ))
+      }
+    </TableBody >
   );
 }
 
