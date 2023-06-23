@@ -101,9 +101,11 @@ function EventsPage() {
       .catch((e) => toast.error("Something went wrong"));
   };
   console.log(columns);
+
   return (
     <>
       <PageHeader label="Events" setSearchQuery={setQuery} />
+
 
       <TableContent
         rows={onlyStringData}
@@ -117,6 +119,8 @@ function EventsPage() {
         handleEdit={handleEdit}
         handleConfirmationChange={handleConfirmationChange}
       />
+
+
       <EditEventDialog
         open={openEdit}
         onClose={handleEditClose}
@@ -124,6 +128,7 @@ function EventsPage() {
       />
     </>
   );
+
 }
 
 export default EventsPage;
